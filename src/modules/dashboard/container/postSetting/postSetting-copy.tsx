@@ -66,6 +66,7 @@ const PostSettingTest: React.FC = () => {
   const displayToggle = useSelector(
     (state: RootState) => state.display.onDisplay
   );
+  
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(setDisplay({ onDisplay: "false" }));

@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {RootState} from './store'
+
+
 
 const displaySlice = createSlice({
     name:'display',
@@ -10,5 +13,7 @@ const displaySlice = createSlice({
     }
 })
 
+
+export const DisplayState = (state: RootState) => state.display.onDisplay;
 export const {setDisplay} = displaySlice.actions;
 export default displaySlice.reducer;

@@ -11,8 +11,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { INITIAL_EVENTS, createEventId } from "./event-utils";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { setDisplay } from "../../../../redux/displaySlice";
+import { useDispatch, useSelector } from "react-redux";
+import { DisplayState, setDisplay } from "../../../../redux/displaySlice";
 
 const StyledDiv = styled.div`
   margin: 0 20px;
@@ -48,15 +48,22 @@ const StyledDiv = styled.div`
     border: 1.5px solid #3f4144;
   }
   .fc-daygrid-day-frame {
-    padding: 0 8px;
+    padding: 10px 30px;
   }
   .fc-scroller-harness {
-    border-radius: 20px;
+    border-radius: 80px;
   }
+  .fc-scrollgrid-section.fc-scrollgrid-section-body.fc-scrollgrid-section-liquid td:first-child {
+    border-radius: 80px;
+  }
+  td.fc-day-sat, td.fc-day-sun {
+    background: #1d1f24;
 `;
 
 const CalendarDemoTest: React.FC = () => {
   const dispatch = useDispatch();
+  const displayToggle = useSelector(DisplayState);
+  
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
@@ -70,7 +77,6 @@ const CalendarDemoTest: React.FC = () => {
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         allDay: selectInfo.allDay,
-        // display: 'background'
       });
     }
   };
@@ -102,6 +108,8 @@ const CalendarDemoTest: React.FC = () => {
             center: "",
             right: "",
           }}
+          defaultAllDay
+          firstDay={1}
           height="600px"
           initialView="dayGridMonth"
           editable={true}

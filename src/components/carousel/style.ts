@@ -3,7 +3,7 @@ import { Carousel } from "antd";
 
 const StyledCarousel = styled(Carousel)`
   .slick-dots.slick-dots-bottom {
-    bottom: -20px !important;
+    bottom: -25px !important;
   }
 `;
 

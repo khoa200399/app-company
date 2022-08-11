@@ -33,12 +33,14 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Dashboard", "1", <PieChartOutlined />),
-  getItem("Calendar", "2", <CalendarOutlined />),
-  getItem("Analytics", "3", <LineChartOutlined />),
-  getItem("Ads", "4", <AntDesignOutlined />),
-  getItem("Campaign", "5", <FileOutlined />),
-  getItem("Setting", "6", <SettingOutlined />),
+  getItem("Dashboard", "dashboard", <PieChartOutlined />),
+  getItem("Calendar", "calendar", <CalendarOutlined />),
+  getItem("Analytics", "analytic", <LineChartOutlined />),
+  getItem("Ads", "ads", <AntDesignOutlined />),
+  getItem("Campaign", "campaign", <FileOutlined />),
+  getItem( <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+  Setting
+</a>, "setting", <SettingOutlined />),
 ];
 
 const AntdSiderStyled = styled(AntdSider)`
@@ -46,6 +48,7 @@ const AntdSiderStyled = styled(AntdSider)`
   .logo {
     color: white;
     padding: 20px 0;
+    margin-bottom: 60px;
   }
 
   .account {
@@ -53,7 +56,7 @@ const AntdSiderStyled = styled(AntdSider)`
     padding: 20px 0;
     margin: 0 20px;
     border-radius: 25px;
-    margin-top: 320px;
+    margin-top: 270px;
   
   }
   .account h2 {
@@ -102,6 +105,31 @@ const AntdMenuStyled = styled(AntdMenu)`
   .ant-menu-item:hover {
     color: #e0ddfa;
   }
+  .anticon.ant-menu-item-icon {
+    padding-left: 20px;
+    color: rgba(255,255,255,0.5);
+    border-radius: 20px 0 0 20px;
+    font-size: 18px;
+
+  }
+  .ant-menu-title-content {
+    border-radius: 0px 20px 20px 0px;
+    margin-left: 0 !important;
+    color: rgba(255,255,255,0.5);
+    font-size: 15px;
+  }
+  .ant-menu-item.ant-menu-item-selected .anticon.ant-menu-item-icon {
+    color: #634BFF;
+  }
+  .ant-menu-item.ant-menu-item-selected .ant-menu-title-content {
+    color:white;
+  }
+  .ant-menu-item::after {
+    border-right:none;
+  }
+  .ant-menu-item.ant-menu-item-selected::after {
+    border-right:none;
+  }
 `;
 const AntdButtonStyled = styled(AntdButton)`
     background: #634BFF;
@@ -126,12 +154,15 @@ const AntdButtonStyled = styled(AntdButton)`
     }
 `
 
-
 const LeftNav: React.FC = () => {
+  const handleClick = (e:any) => {
+    console.log('Click',e.key);
+    
+  }
   return (
     <AntdSiderStyled>
       <div className="logo">Khoa</div>
-      <AntdMenuStyled defaultSelectedKeys={["1"]} mode="inline" items={items} />
+      <AntdMenuStyled onClick={e => handleClick(e)} defaultSelectedKeys={["1"]} mode="inline" items={items} />
       <div className="account">
         <AntdAvatar size={64} icon={<UserOutlined />} />
         <h2>Vanessa</h2>
