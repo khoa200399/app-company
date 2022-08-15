@@ -16,14 +16,14 @@ const StyledLayout = styled(Layout)`
   background: #151419;
 `;
 
-const Dashboard = () => {
+const Ads = () => {
   return (
     <StyledLayout hasSider>
       <AntdContent>
-        <StyledDiv>Dashboard</StyledDiv>
+        <StyledDiv>ADS</StyledDiv>
       </AntdContent>
     </StyledLayout>
   );
 };
 
-export default Dashboard;
+export default Ads;

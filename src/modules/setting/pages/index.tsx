@@ -1,13 +1,13 @@
 import React from "react";
 import PublicLayout from "../../../components/decorator/public-layout";
-import Analytic from "./analytic";
+import Setting from "./setting";
 
-function AnalyticPage() {
+function SettingPage() {
   return (
     <PublicLayout>
-      <Analytic />
+      <SettingPage />
     </PublicLayout>
   );
 }
 
-export default AnalyticPage;
+export default SettingPage;

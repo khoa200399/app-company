@@ -8,20 +8,22 @@ const StyledDiv = styled.div`
   min-height: 100vh;
   background: #1a1c20;
   border-radius: 80px 0 0 80px;
+  color: white;
+  font-size: 50px;
 `;
 
 const StyledLayout = styled(Layout)`
   background: #151419;
 `;
 
-const Dashboard = () => {
+const Analytic = () => {
   return (
     <StyledLayout hasSider>
       <AntdContent>
-        <StyledDiv>Dashboard</StyledDiv>
+        <StyledDiv>Analytic</StyledDiv>
       </AntdContent>
     </StyledLayout>
   );
 };
 
-export default Dashboard;
+export default Analytic;

@@ -1,13 +1,13 @@
 import React from "react";
 import PublicLayout from "../../../components/decorator/public-layout";
-import Analytic from "./analytic";
+import Campaign from "./campaign";
 
-function AnalyticPage() {
+function CampaignPage() {
   return (
     <PublicLayout>
-      <Analytic />
+      <Campaign />
     </PublicLayout>
   );
 }
 
-export default AnalyticPage;
+export default CampaignPage;
