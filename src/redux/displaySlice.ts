@@ -10,9 +10,7 @@ const displaySlice = createSlice({
         setDisplay:(state, action) => {
             state.onDisplay = action.payload.onDisplay;
         },
-        setCurrentPage: (state,action) => {
-            console.log(action.payload);
-            
+        setCurrentPage: (state,action) => {           
             state.currentPage = action.payload.currentPage;
         }
     }

@@ -10,13 +10,13 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import AntdSider from "../../../../components/decorator/public-layout/navigation";
-import AntdMenu from "../../../../components/menu";
+import AntdSider from "../decorator/public-layout/navigation";
+import AntdMenu from "../menu";
 import styled from "styled-components";
-import AntdAvatar from "../../../../components/avatar";
-import AntdButton from "../../../../components/button";
+import AntdAvatar from "../avatar";
+import AntdButton from "../button";
 import {useDispatch, useSelector} from 'react-redux'
-import { setCurrentPage } from "../../../../redux/displaySlice";
+import { setCurrentPage } from "../../redux/displaySlice";
 import {Link} from 'react-router-dom'
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -166,12 +166,12 @@ const LeftNav: React.FC = () => {
     // console.log('Click',e.key);
   }
   const selectedPage:any = useSelector(state => state)
-  console.log(selectedPage.currentPage);
+  console.log(selectedPage.display.currentPage);
   
   return (
     <AntdSiderStyled>
       <div className="logo">Khoa</div>
-      <AntdMenuStyled onClick={e => handleClick(e)} defaultSelectedKeys={["calendar"]} mode="inline" items={items} />
+      <AntdMenuStyled onClick={e => handleClick(e)} defaultSelectedKeys={selectedPage.display.currentPage} mode="inline" items={items} />
       <div className="account">
         <AntdAvatar size={64} icon={<UserOutlined />} />
         <h2>Vanessa</h2>

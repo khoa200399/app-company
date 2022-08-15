@@ -1,11 +1,7 @@
 import React from "react";
-import NewCalendar from "../container/calendar/calendar";
-import PostScheduler from "../container/postScheduler/postCheduler";
-import User from "../container/users/users";
 import styled from "styled-components";
 import Layout from "antd/lib/layout/layout";
 import AntdContent from "../../../components/content";
-import PostSettingTest from "../container/postSetting/postSetting-copy";
 
 const StyledDiv = styled.div`
   padding: 0 20px;
@@ -18,20 +14,14 @@ const StyledLayout = styled(Layout)`
   background: #151419;
 `;
 
-
-const Calendar = () => {
+const Dashboard = () => {
   return (
     <StyledLayout hasSider>
       <AntdContent>
-        <StyledDiv>
-          <User />
-          <PostScheduler />
-          <NewCalendar />
-        </StyledDiv>
+        <StyledDiv>Dashboard</StyledDiv>
       </AntdContent>
-      <PostSettingTest/>
     </StyledLayout>
   );
 };
 
-export default Calendar;
+export default Dashboard;
