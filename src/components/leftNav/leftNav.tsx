@@ -163,7 +163,6 @@ const LeftNav: React.FC = () => {
   const dispatch = useDispatch()
   const handleClick = (e:any) => {
     dispatch(setCurrentPage({currentPage: e.key}))
-    // console.log('Click',e.key);
   }
   const selectedPage:any = useSelector(state => state)
   console.log(selectedPage.display.currentPage);

@@ -5,7 +5,7 @@ import Setting from "./setting";
 function SettingPage() {
   return (
     <PublicLayout>
-      <SettingPage />
+      <Setting/>
     </PublicLayout>
   );
 }
