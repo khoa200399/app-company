@@ -5,7 +5,7 @@ import {RootState} from './store'
 
 const displaySlice = createSlice({
     name:'display',
-    initialState: { onDisplay: 'false', currentPage:''},
+    initialState: { onDisplay: 'false', currentPage:'calendar'},
     reducers: {
         setDisplay:(state, action) => {
             state.onDisplay = action.payload.onDisplay;
