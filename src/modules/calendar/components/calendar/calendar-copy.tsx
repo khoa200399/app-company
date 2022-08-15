@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import FullCalendar, {
   EventApi,
   DateSelectArg,
@@ -56,6 +56,9 @@ const StyledDiv = styled.div`
   .fc-scrollgrid-section.fc-scrollgrid-section-body.fc-scrollgrid-section-liquid td:first-child {
     border-radius: 80px;
   }
+  .fc-daygrid-day.fc-day.fc-day-mon.fc-day-today  {
+    border-radius: 0px !important; 
+  }
   td.fc-day-sat, td.fc-day-sun {
     background: #1d1f24;
 `;
@@ -65,6 +68,7 @@ const CalendarDemoTest: React.FC = () => {
   const displayToggle = useSelector(DisplayState);
   
   const handleDateSelect = (selectInfo: DateSelectArg) => {
+    console.log(selectInfo);
     let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
@@ -81,10 +85,11 @@ const CalendarDemoTest: React.FC = () => {
     }
   };
   const handleEventClick = (clickInfo: EventClickArg) => {
+    console.log(clickInfo.event);
     // if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
     //   clickInfo.event.remove()
     // }
-    // console.log("Khoa", clickInfo.event);
+    // console.log(clickInfo.event);
     dispatch(setDisplay({'onDisplay':'true'}));
   };
 

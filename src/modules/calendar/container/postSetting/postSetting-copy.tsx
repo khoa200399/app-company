@@ -71,7 +71,7 @@ const PostSettingTest: React.FC = () => {
   const handleClose = () => {
     dispatch(setDisplay({ onDisplay: "false" }));
   };
-  let displayState = displayToggle == "true" ? "block" : "none";
+  let displayState = displayToggle === "true" ? "block" : "none";
 
   return (
     <StyledDiv style={{ display: displayState }}>

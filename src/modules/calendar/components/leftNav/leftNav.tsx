@@ -10,11 +10,14 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import AntdSider from "../../components/decorator/public-layout/navigation";
-import AntdMenu from "../../components/menu";
+import AntdSider from "../../../../components/decorator/public-layout/navigation";
+import AntdMenu from "../../../../components/menu";
 import styled from "styled-components";
-import AntdAvatar from "../../components/avatar";
-import AntdButton from "../../components/button";
+import AntdAvatar from "../../../../components/avatar";
+import AntdButton from "../../../../components/button";
+import {useDispatch, useSelector} from 'react-redux'
+import { setCurrentPage } from "../../../../redux/displaySlice";
+import {Link} from 'react-router-dom'
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -33,14 +36,12 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Dashboard", "dashboard", <PieChartOutlined />),
-  getItem("Calendar", "calendar", <CalendarOutlined />),
-  getItem("Analytics", "analytic", <LineChartOutlined />),
-  getItem("Ads", "ads", <AntDesignOutlined />),
-  getItem("Campaign", "campaign", <FileOutlined />),
-  getItem( <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-  Setting
-</a>, "setting", <SettingOutlined />),
+  getItem(<Link to='/dashboard'>Dashboard</Link>, "dashboard", <PieChartOutlined />),
+  getItem(<Link to='/calendar'>Calendar</Link>, "calendar", <CalendarOutlined />),
+  getItem(<Link to='/analytics'>Analytics</Link>, "analytics", <LineChartOutlined />),
+  getItem(<Link to='/ads'>Ads</Link>, "ads", <AntDesignOutlined />),
+  getItem(<Link to='/campaign'>Campaign</Link>, "campaign", <FileOutlined />),
+  getItem(<Link to='/setting'>Setting</Link>, "setting", <SettingOutlined />),
 ];
 
 const AntdSiderStyled = styled(AntdSider)`
@@ -89,7 +90,7 @@ const AntdMenuStyled = styled(AntdMenu)`
     margin: 0;
   }
 
-  .ant-menu-title-content {
+  .ant-menu-title-content a {
     padding-left: 10px;
   }
 
@@ -112,16 +113,20 @@ const AntdMenuStyled = styled(AntdMenu)`
     font-size: 18px;
 
   }
-  .ant-menu-title-content {
+  .ant-menu-title-content a {
     border-radius: 0px 20px 20px 0px;
-    margin-left: 0 !important;
     color: rgba(255,255,255,0.5);
     font-size: 15px;
   }
+
+  .ant-menu-title-content {
+    margin-left: 0 !important;
+  }
+
   .ant-menu-item.ant-menu-item-selected .anticon.ant-menu-item-icon {
     color: #634BFF;
   }
-  .ant-menu-item.ant-menu-item-selected .ant-menu-title-content {
+  .ant-menu-item.ant-menu-item-selected .ant-menu-title-content a {
     color:white;
   }
   .ant-menu-item::after {
@@ -155,14 +160,18 @@ const AntdButtonStyled = styled(AntdButton)`
 `
 
 const LeftNav: React.FC = () => {
+  const dispatch = useDispatch()
   const handleClick = (e:any) => {
-    console.log('Click',e.key);
-    
+    dispatch(setCurrentPage({currentPage: e.key}))
+    // console.log('Click',e.key);
   }
+  const selectedPage:any = useSelector(state => state)
+  console.log(selectedPage.currentPage);
+  
   return (
     <AntdSiderStyled>
       <div className="logo">Khoa</div>
-      <AntdMenuStyled onClick={e => handleClick(e)} defaultSelectedKeys={["1"]} mode="inline" items={items} />
+      <AntdMenuStyled onClick={e => handleClick(e)} defaultSelectedKeys={["calendar"]} mode="inline" items={items} />
       <div className="account">
         <AntdAvatar size={64} icon={<UserOutlined />} />
         <h2>Vanessa</h2>

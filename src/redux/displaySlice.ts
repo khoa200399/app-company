@@ -5,15 +5,20 @@ import {RootState} from './store'
 
 const displaySlice = createSlice({
     name:'display',
-    initialState: { onDisplay: 'false'},
+    initialState: { onDisplay: 'false', currentPage:''},
     reducers: {
         setDisplay:(state, action) => {
             state.onDisplay = action.payload.onDisplay;
+        },
+        setCurrentPage: (state,action) => {
+            console.log(action.payload);
+            
+            state.currentPage = action.payload.currentPage;
         }
     }
 })
 
 
-export const DisplayState = (state: RootState) => state.display.onDisplay;
-export const {setDisplay} = displaySlice.actions;
+export const DisplayState = (state: RootState) => state.display;
+export const {setDisplay, setCurrentPage} = displaySlice.actions;
 export default displaySlice.reducer;
