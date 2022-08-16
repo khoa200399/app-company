@@ -26,7 +26,7 @@ function App() {
       <BrowserRouter>
         <ToastContainer/>
         <Routes>
-          <Route path="/" element={<Navigate to="/calendar" replace />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
 
           <Route element={<RequireAuth allowRole={"all"} />}>

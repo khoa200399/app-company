@@ -102,6 +102,7 @@ function Login() {
           <AntdButton htmlType="submit">Submit</AntdButton>
           {isLoginLoading ?   <Spin size="large" /> : null}
         </form>
+        <p>Test Accout: test@gmail.com - 123456</p>
       </Card>
     </div>
   );
