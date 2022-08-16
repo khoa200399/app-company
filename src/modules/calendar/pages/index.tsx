@@ -4,7 +4,7 @@ import PublicLayout from "../../../components/decorator/public-layout";
 
 function CalendarPage() {
   return (
-    <PublicLayout>
+    <PublicLayout currentPage='calendar'>
       <Calendar />
     </PublicLayout>
   );

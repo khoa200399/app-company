@@ -6,13 +6,14 @@ import LeftNav from "../../leftNav/leftNav";
 const { Content } = Layout;
 
 type Props = {
+  currentPage?: string;
   children?: JSX.Element;
 };
 
 const PublicLayout: React.FC<Props> = (props) => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <LeftNav />
+      <LeftNav currentPage={props.currentPage} />
       {/* <Calendar /> */}
       {props.children}
     </Layout>

@@ -65,7 +65,7 @@ const StyledDiv = styled.div`
 
 const CalendarDemoTest: React.FC = () => {
   const dispatch = useDispatch();
-  const displayToggle = useSelector(DisplayState);
+  const displayToggle = useSelector(state => state);
   
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     console.log(selectInfo);

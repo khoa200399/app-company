@@ -158,14 +158,17 @@ const AntdButtonStyled = styled(AntdButton)`
       color: white;
     }
 `
+type Props = {
+  currentPage?: string;
+}
 
-const LeftNav: React.FC = () => {
+const LeftNav: React.FC<Props> = (props) => {
   const dispatch = useDispatch()
   const handleClick = (e:any) => {
     dispatch(setCurrentPage({currentPage: e.key}))
   }
   const selectedPage:any = useSelector(state => state)
-  console.log(selectedPage.display.currentPage);
+  console.log(props.currentPage);
   
   return (
     <AntdSiderStyled>
