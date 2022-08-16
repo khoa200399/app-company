@@ -24,7 +24,7 @@ const Calendar = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setCurrentPage({ currentPage: "calendar" }));
-  });
+  },[]);
 
   return (
     <StyledLayout hasSider>

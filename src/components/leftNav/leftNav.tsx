@@ -17,7 +17,8 @@ import AntdAvatar from "../avatar";
 import AntdButton from "../button";
 import {useDispatch, useSelector} from 'react-redux'
 import { setCurrentPage } from "../../redux/displaySlice";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { logout } from "../../redux/authSlice";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -164,23 +165,30 @@ type Props = {
 
 const LeftNav: React.FC<Props> = (props) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handleClick = (e:any) => {
     dispatch(setCurrentPage({currentPage: e.key}))
   }
+  const user = useSelector((state:any) => state.auth.current_user)
 
   const selectedPage:any = useSelector(state => state);
   if(!selectedPage.display.currentPage) return <h1>...Loading</h1>
   console.log(selectedPage.display);
   
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login')
+  }
+
   return (
     <AntdSiderStyled>
       <div className="logo">Khoa</div>
       <AntdMenuStyled onClick={e => handleClick(e)} defaultSelectedKeys={selectedPage.display.currentPage} mode="inline" items={items} />
       <div className="account">
         <AntdAvatar size={64} icon={<UserOutlined />} />
-        <h2>Vanessa</h2>
-        <h1>@vanessasays</h1>
-        <AntdButtonStyled htmlType={'button'} size={"large"}>
+        <h2>{user ? user.name : 'Vanessa'}</h2>
+        <h1>{user ? user.email : '@vanessasays'}</h1>
+        <AntdButtonStyled onClick={handleLogout} htmlType={'button'} size={"large"}>
           <LogoutOutlined style={{marginRight:'5px'}}/>Sign out
         </AntdButtonStyled>
       </div>
