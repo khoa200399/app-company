@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   CalendarOutlined,
   FileOutlined,
@@ -167,8 +167,10 @@ const LeftNav: React.FC<Props> = (props) => {
   const handleClick = (e:any) => {
     dispatch(setCurrentPage({currentPage: e.key}))
   }
-  const selectedPage:any = useSelector(state => state)
-  console.log(props.currentPage);
+
+  const selectedPage:any = useSelector(state => state);
+  if(!selectedPage.display.currentPage) return <h1>...Loading</h1>
+  console.log(selectedPage.display);
   
   return (
     <AntdSiderStyled>

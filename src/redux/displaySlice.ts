@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {RootState} from './store'
 
-const initialState = {
+
+type DisplayState = {
+    onDisplay: string | null,
+    currentPage: string | null,
+    users: object[] | null
+}
+
+const initialState: DisplayState = {
     onDisplay: 'false',
-    currentPage: 'calendar',
+    currentPage: '',
     users: []
 }
 
@@ -17,12 +24,6 @@ const displaySlice = createSlice({
         setCurrentPage: (state,action) => {           
             state.currentPage = action.payload.currentPage;
         },
-        setUserLogin: (state, action) => {
-            const {id, token} = action.payload.user;
-            const foundUser:any = state.users.find((user:any) => user.id === id );
-            if(foundUser) foundUser.token = token;
-            state.users.push(action.payload.user)
-        }
     }
 })
 

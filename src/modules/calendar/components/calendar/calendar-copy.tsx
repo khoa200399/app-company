@@ -86,6 +86,7 @@ const CalendarDemoTest: React.FC = () => {
   };
   const handleEventClick = (clickInfo: EventClickArg) => {
     console.log(clickInfo.event);
+
     // if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
     //   clickInfo.event.remove()
     // }
