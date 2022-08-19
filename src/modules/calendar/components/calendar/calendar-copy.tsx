@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 import AntdButton from "../../../../components/button";
 import AntdDateTimePicker from "../../../../components/datetimepicker/datetimepicker";
 import AntdCheckBox from "../../../../components/checkbox";
+import { increaseDate } from "../../../../utils/datetime";
 
 const StyledDiv = styled.div`
   margin: 0 20px;
@@ -103,19 +104,20 @@ const CalendarDemoTest: React.FC = () => {
 
   const handleEditEvent = (eventId: any, values: any) => {
     const calendarApi = calendarRef.current?.getApi();
-    const eventEdit = calendarApi?.getEventById(eventId);
+    const eventEdit: any = calendarApi?.getEventById(eventId);
 
     if (values.title === "") eventEdit?.setProp("title", selEvent.title);
     else eventEdit?.setProp("title", values.title);
 
-    eventEdit?.setStart(editEvent.start);
-    eventEdit?.setEnd(editEvent.end);
-    eventEdit?.setAllDay(editEvent.allDay);
-    console.log("set success");
+    console.log(editEvent.start)
+
+    eventEdit.setStart(editEvent.start);
+    eventEdit.setEnd(editEvent.end);
+    eventEdit.setAllDay(editEvent.allDay);
   };
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
-    console.log(selectInfo);
+    // console.log(selectInfo);
     let calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
@@ -126,18 +128,20 @@ const CalendarDemoTest: React.FC = () => {
         id: createEventId(),
         title,
         start: selectInfo.startStr,
-        end: selectInfo.endStr,
+        end: increaseDate(selectInfo.startStr, 3),
         allDay: selectInfo.allDay,
+        editable: true,
       });
     }
   };
 
   const handleEventClick = (clickInfo: EventClickArg | any) => {
     formik.resetForm();
-    // console.log(clickInfo.event.allDay);
-
-    setIsModalVisible(true);
     setIdEventEdit(clickInfo.event.id);
+    setIsModalVisible(true);
+
+    console.log(JSON.stringify(clickInfo.event.start));
+    
 
     setSelEvent({
       title: clickInfo.event.title,
@@ -145,6 +149,7 @@ const CalendarDemoTest: React.FC = () => {
       end: clickInfo.event.end,
       allDay: clickInfo.event.allDay,
     });
+
     setEditEvent({
       title: clickInfo.event.title,
       start: clickInfo.event.start,
@@ -167,14 +172,19 @@ const CalendarDemoTest: React.FC = () => {
   }
 
   const handleStart = (dateStr: any) => {
-    setEditEvent({ ...editEvent, start: dateStr });
+    setEditEvent((prevEdit) => {
+      return { ...prevEdit, start: dateStr };
+    });
   };
-
   const handleEnd = (dateStr: any) => {
-    setEditEvent({ ...editEvent, end: dateStr });
+    setEditEvent((prevEdit) => {
+      return { ...prevEdit, end: dateStr };
+    });
   };
   const handleAllDay = (e: any) => {
-    setEditEvent({ ...editEvent, allDay: e.target.checked });
+    setEditEvent((prevEdit) => {
+      return { ...prevEdit, allDay: e.target.checked };
+    });
   };
   const handleDelete = () => {
     const calendarApi = calendarRef.current?.getApi();
@@ -249,7 +259,7 @@ const CalendarDemoTest: React.FC = () => {
               Save
             </AntdButton>
             <AntdButton
-              style={{ marginLeft: '10px'}}
+              style={{ marginLeft: "10px" }}
               danger
               type="primary"
               onClick={handleDelete}
