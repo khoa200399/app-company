@@ -29,11 +29,10 @@ const StyledLayout = styled(Layout)`
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-
-  const user = useSelector((state: any) => state.auth.current_user);
   useEffect(() => {
     dispatch(setCurrentPage({ currentPage: "dashboard" }));
   }, []);
+  const user = useSelector((state: any) => state.auth.current_user);
 
   return (
     <StyledLayout hasSider>
@@ -44,7 +43,7 @@ const Dashboard = () => {
             <p>Id: {user.id}</p>
             <p>Name: {user.name}</p>
             <p>Email: {user.email}</p>
-            <p>Token: {user.access_token?.substr(0,60)+'...'}</p>
+            <p>Token: {user.access_token?.substr(0, 60) + "..."}</p>
           </div>
         </StyledDiv>
       </AntdContent>

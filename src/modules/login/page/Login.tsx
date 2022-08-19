@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card,Spin } from "antd";
+import { Card, Spin } from "antd";
 import AntdInput from "../../../components/input";
 import AntdButton from "../../../components/button";
 import { useFormik } from "formik";
@@ -7,8 +7,8 @@ import styled from "styled-components";
 import * as yup from "yup";
 import { useLoginUserMutation } from "../../../redux/authApi";
 import { useNavigate } from "react-router-dom";
-import {toast} from 'react-toastify'
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { SITE_MAP } from "../../sitemap";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ function Login() {
       error: loginError,
       isSuccess: isLoginSuccess,
       isLoading: isLoginLoading,
-      isError: isLoginError
+      isError: isLoginError,
     },
   ] = useLoginUserMutation();
   const navigate = useNavigate();
@@ -47,24 +47,24 @@ function Login() {
       loginUser({ email: values.username, password: values.password });
     },
   });
-  useEffect(()=> {
-    const auth = JSON.parse(localStorage.getItem('user') || '{}')
-    if(auth.access_token) navigate('/dashboard')
-  },[])
+  useEffect(() => {
+    const auth = JSON.parse(localStorage.getItem("user") || "{}");
+    if (auth.access_token) navigate(SITE_MAP.DASHBOARD);
+  }, []);
 
   useEffect(() => {
     if (isLoginSuccess) {
-      toast.success('Login Successfully!!!')
-      navigate('/dashboard');
+      toast.success("Login Successfully!!!");
+      navigate(SITE_MAP.DASHBOARD);
     }
-    if(isLoginError) {
-      toast.error('Login error!!!')
+    if (isLoginError) {
+      toast.error("Login error!!!");
     }
-  }, [isLoginSuccess,isLoginError]);
+  }, [isLoginSuccess, isLoginError]);
 
   return (
-    <div style={{ paddingTop:'40px' ,height: "100vh", background:'#1a1c20' }}>
-      <Card title="LOGIN" style={{width: '40%', margin: '0 auto'}}>
+    <div style={{ paddingTop: "40px", height: "100vh", background: "#1a1c20" }}>
+      <Card title="LOGIN" style={{ width: "40%", margin: "0 auto" }}>
         <form onSubmit={formik.handleSubmit}>
           <StyledDiv>
             <label style={{ width: "30%" }} htmlFor="username">
@@ -99,8 +99,10 @@ function Login() {
           {formik.errors.password && formik.touched.password && (
             <p style={{ color: "red" }}>{formik.errors.password}</p>
           )}
-          <AntdButton htmlType="submit">Submit</AntdButton>
-          {isLoginLoading ?   <Spin size="large" /> : null}
+          <AntdButton htmlType="submit" disabled={formik.isSubmitting}>
+            Submit
+          </AntdButton>
+          {isLoginLoading ? <Spin size="large" /> : null}
         </form>
         <p>Test Accout: test@gmail.com - 123456</p>
       </Card>

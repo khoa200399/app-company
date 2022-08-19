@@ -14,7 +14,6 @@ const PublicLayout: React.FC<Props> = (props) => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <LeftNav currentPage={props.currentPage} />
-      {/* <Calendar /> */}
       {props.children}
     </Layout>
   );

@@ -85,7 +85,7 @@ export const authApi = createApi({
               email: res.data.result.email,
               access_token: res.data.token,
               refresh_token: res.data.refresh_token,
-              roles: ['all','user','admin']
+              roles: ['all','user']
             })
           );
           console.log("Result Login", res.data);

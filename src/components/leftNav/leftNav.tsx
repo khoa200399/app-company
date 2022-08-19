@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { setCurrentPage } from "../../redux/displaySlice";
 import {Link, useNavigate} from 'react-router-dom'
 import { logout } from "../../redux/authSlice";
+import { SITE_MAP } from "../../modules/sitemap";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -37,12 +38,12 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem(<Link to='/dashboard'>Dashboard</Link>, "dashboard", <PieChartOutlined />),
-  getItem(<Link to='/calendar'>Calendar</Link>, "calendar", <CalendarOutlined />),
-  getItem(<Link to='/analytics'>Analytics</Link>, "analytics", <LineChartOutlined />),
-  getItem(<Link to='/ads'>Ads</Link>, "ads", <AntDesignOutlined />),
-  getItem(<Link to='/campaign'>Campaign</Link>, "campaign", <FileOutlined />),
-  getItem(<Link to='/setting'>Setting</Link>, "setting", <SettingOutlined />),
+  getItem(<Link to={SITE_MAP.DASHBOARD}>Dashboard</Link>, "dashboard", <PieChartOutlined />),
+  getItem(<Link to={SITE_MAP.CANLENDAR}>Calendar</Link>, "calendar", <CalendarOutlined />),
+  getItem(<Link to={SITE_MAP.ANALYTICS}>Analytics</Link>, "analytics", <LineChartOutlined />),
+  getItem(<Link to={SITE_MAP.ADS}>Ads</Link>, "ads", <AntDesignOutlined />),
+  getItem(<Link to={SITE_MAP.CAMPAIGN}>Campaign</Link>, "campaign", <FileOutlined />),
+  getItem(<Link to={SITE_MAP.SETTING}>Setting</Link>, "setting", <SettingOutlined />),
 ];
 
 const AntdSiderStyled = styled(AntdSider)`
@@ -173,11 +174,10 @@ const LeftNav: React.FC<Props> = (props) => {
 
   const selectedPage:any = useSelector(state => state);
   if(!selectedPage.display.currentPage) return <h1>...Loading</h1>
-  console.log(selectedPage.display);
   
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login')
+    navigate(SITE_MAP.LOGIN)
   }
 
   return (

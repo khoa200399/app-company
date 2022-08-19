@@ -45,7 +45,7 @@ const StyledTimePicker = styled(TimePicker)`
   border: 1px solid #737579;
 `;
 
-const AntdDateTimePicker: React.FC = () => (
+const DateTimePicker: React.FC = () => (
   <StyledDiv>
     <div className="wrapper">
       <StyledDatePicker format={"DD MMMM"} />
@@ -61,4 +61,4 @@ const AntdDateTimePicker: React.FC = () => (
   </StyledDiv>
 );
 
-export default AntdDateTimePicker;
+export default DateTimePicker;

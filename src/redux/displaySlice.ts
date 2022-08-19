@@ -28,6 +28,6 @@ const displaySlice = createSlice({
 })
 
 
-export const DisplayState = (state: RootState) => state.display;
+export const DisplaySlice = (state: RootState) => state.display;
 export const {setDisplay, setCurrentPage} = displaySlice.actions;
 export default displaySlice.reducer;

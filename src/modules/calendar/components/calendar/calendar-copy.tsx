@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import FullCalendar, {
   EventApi,
   DateSelectArg,
@@ -6,13 +6,20 @@ import FullCalendar, {
   EventContentArg,
   formatDate,
 } from "@fullcalendar/react";
+import moment from "moment";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { INITIAL_EVENTS, createEventId } from "./event-utils";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { DisplayState, setDisplay } from "../../../../redux/displaySlice";
+import { setDisplay } from "../../../../redux/displaySlice";
+import { Modal } from "antd";
+import AntdInput from "../../../../components/input";
+import { useFormik } from "formik";
+import AntdButton from "../../../../components/button";
+import AntdDateTimePicker from "../../../../components/datetimepicker/datetimepicker";
+import AntdCheckBox from "../../../../components/checkbox";
 
 const StyledDiv = styled.div`
   margin: 0 20px;
@@ -64,16 +71,56 @@ const StyledDiv = styled.div`
 `;
 
 const CalendarDemoTest: React.FC = () => {
+  const calendarRef = useRef<FullCalendar>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editEvent, setEditEvent] = useState({
+    title: "",
+    start: "",
+    end: "",
+    allDay: false,
+  });
+  const [selEvent, setSelEvent] = useState({
+    title: "",
+    start: "",
+    end: "",
+    allDay: false,
+  });
+  const [idEventEdit, setIdEventEdit] = useState("");
   const dispatch = useDispatch();
-  const displayToggle = useSelector(state => state);
-  
+  const displayToggle = useSelector((state) => state);
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      start: "",
+      end: "",
+    },
+    onSubmit: (values: any) => {
+      handleEditEvent(idEventEdit, values);
+      setIsModalVisible(false);
+    },
+  });
+
+  const handleEditEvent = (eventId: any, values: any) => {
+    const calendarApi = calendarRef.current?.getApi();
+    const eventEdit = calendarApi?.getEventById(eventId);
+
+    if (values.title === "") eventEdit?.setProp("title", selEvent.title);
+    else eventEdit?.setProp("title", values.title);
+
+    eventEdit?.setStart(editEvent.start);
+    eventEdit?.setEnd(editEvent.end);
+    eventEdit?.setAllDay(editEvent.allDay);
+    console.log("set success");
+  };
+
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     console.log(selectInfo);
-    let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
 
+    let title = prompt("Please enter a new title for your event");
     if (title) {
       calendarApi.addEvent({
         id: createEventId(),
@@ -84,30 +131,64 @@ const CalendarDemoTest: React.FC = () => {
       });
     }
   };
-  const handleEventClick = (clickInfo: EventClickArg) => {
-    console.log(clickInfo.event);
 
-    // if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //   clickInfo.event.remove()
-    // }
-    // console.log(clickInfo.event);
-    dispatch(setDisplay({'onDisplay':'true'}));
+  const handleEventClick = (clickInfo: EventClickArg | any) => {
+    formik.resetForm();
+    // console.log(clickInfo.event.allDay);
+
+    setIsModalVisible(true);
+    setIdEventEdit(clickInfo.event.id);
+
+    setSelEvent({
+      title: clickInfo.event.title,
+      start: clickInfo.event.start,
+      end: clickInfo.event.end,
+      allDay: clickInfo.event.allDay,
+    });
+    setEditEvent({
+      title: clickInfo.event.title,
+      start: clickInfo.event.start,
+      end: clickInfo.event.end,
+      allDay: clickInfo.event.allDay,
+    });
+
+    dispatch(setDisplay({ onDisplay: "true" }));
   };
 
   function renderEventContent(eventContent: EventContentArg) {
     return (
-      <>
-        <b>{eventContent.timeText}</b>
+      <div style={{ background: "transparent" }}>
+        <b style={{ marginRight: "5px" }}>
+          {eventContent.timeText.toUpperCase()}
+        </b>
         <i>{eventContent.event.title}</i>
-      </>
+      </div>
     );
   }
+
+  const handleStart = (dateStr: any) => {
+    setEditEvent({ ...editEvent, start: dateStr });
+  };
+
+  const handleEnd = (dateStr: any) => {
+    setEditEvent({ ...editEvent, end: dateStr });
+  };
+  const handleAllDay = (e: any) => {
+    setEditEvent({ ...editEvent, allDay: e.target.checked });
+  };
+  const handleDelete = () => {
+    const calendarApi = calendarRef.current?.getApi();
+    const eventEdit = calendarApi?.getEventById(idEventEdit);
+    eventEdit?.remove();
+    setIsModalVisible(false);
+  };
 
   return (
     <StyledDiv className="demo-app">
       {/* {this.renderSidebar()} */}
       <div className="demo-app-main">
         <FullCalendar
+          ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
             left: "title",
@@ -129,6 +210,55 @@ const CalendarDemoTest: React.FC = () => {
           eventClick={handleEventClick}
         />
       </div>
+
+      <Modal
+        visible={isModalVisible}
+        title="Basic Modal"
+        okButtonProps={{ hidden: true }}
+        cancelButtonProps={{ hidden: true }}
+        onCancel={() => setIsModalVisible(false)}
+        destroyOnClose={true}
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <label htmlFor="title">Event title:</label>
+          <AntdInput
+            id="title"
+            name="title"
+            type="text"
+            onChange={formik.handleChange}
+            defaultValue={selEvent.title}
+          />
+          <AntdDateTimePicker
+            defaultStart={selEvent.start}
+            defaultEnd={selEvent.end}
+            valueEnd={handleEnd}
+            valueStart={handleStart}
+          />
+          <AntdCheckBox
+            onChange={handleAllDay}
+            defaultChecked={selEvent.allDay}
+          >
+            All Day Event
+          </AntdCheckBox>
+          <div>
+            <AntdButton
+              htmlType="submit"
+              type="primary"
+              disabled={formik.isSubmitting}
+            >
+              Save
+            </AntdButton>
+            <AntdButton
+              style={{ marginLeft: '10px'}}
+              danger
+              type="primary"
+              onClick={handleDelete}
+            >
+              Delete
+            </AntdButton>
+          </div>
+        </form>
+      </Modal>
     </StyledDiv>
   );
 };

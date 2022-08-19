@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Layout from "antd/lib/layout/layout";
 import AntdContent from "../../../components/content";
+import { useDispatch } from "react-redux";
+import { setCurrentPage } from "../../../redux/displaySlice";
 
 const StyledDiv = styled.div`
   padding: 0 20px;
@@ -17,6 +19,10 @@ const StyledLayout = styled(Layout)`
 `;
 
 const Campaign = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCurrentPage({ currentPage: "campaign" }));
+  }, []);
   return (
     <StyledLayout hasSider>
       <AntdContent>

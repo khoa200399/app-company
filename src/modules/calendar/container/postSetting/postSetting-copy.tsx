@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import "../../../../styles/variables.scss";
 import CarouselDemo from "../../components/carousel/carousel";
-import AntdDateTimePicker from "../../components/datepicker/datepicker";
+import DateTimePicker from "../../components/datepicker/datepicker";
 import AntdTag from "../../components/tag/tag";
 import { RootState } from "../../../../redux/store";
 import { setDisplay } from "../../../../redux/displaySlice";
@@ -98,7 +98,7 @@ const PostSettingTest: React.FC = () => {
 
         <div className="datePosting">
           <h1 className="partTitle">Date of Posting</h1>
-          <AntdDateTimePicker />
+          <DateTimePicker />
         </div>
 
         <div className="tag">
